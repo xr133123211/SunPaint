@@ -52,7 +52,7 @@ public class showView extends View{
 		Resources r = this.getContext().getResources();
 		img = BitmapFactory.decodeResource(r,R.drawable.fx1);
 		ImageProcess process = new ImageProcess(img);
-		img = process.getAbstract();
+		img = process.getCanny();
 		paint = new Paint();
 		//if (debug) System.out.println(w+"       "+h);
 	}
