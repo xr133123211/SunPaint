@@ -8,6 +8,7 @@ require("dbconn.php");
     while($result=mysql_fetch_array($arr)){
        if($result['name']===$name&&$result['password']===$pass){
            $return['result']="success";
+           $_SESSION['username']=$name;
            mysql_free_result($arr);
            exit(json_encode($return));
        }
