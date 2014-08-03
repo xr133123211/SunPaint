@@ -5,7 +5,7 @@ $storage = new SaeStorage();
 $domain = 'zouxuan';
 $destFileName = $_FILES['file']['name'];
 $srcFileName = $_FILES['file']['tmp_name'];
-$result['result'] = $storage->upload($domain,$destFileName, $srcFileName);
+$s= $storage->upload($domain,$destFileName, $srcFileName);
 
 $time=time();
 
@@ -17,6 +17,12 @@ mysql_query("insert into record values ('zouxuan','$time','$data')");
 
 //$_SESSION['username']
 
+if($s===false){
+    $result['result'] ='fail';
+}
+else{
+    $result['result']='success';
+}
 
 exit (json_encode($result));
 
