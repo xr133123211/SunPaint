@@ -1,6 +1,7 @@
 <?php
 require("dbconn.php");
 
+$name=$_SESSION['username'];
 $storage = new SaeStorage();
 $domain = 'zouxuan';
 $destFileName = $_FILES['file']['name'];
@@ -9,11 +10,11 @@ $s= $storage->upload($domain,$destFileName, $srcFileName);
 
 $time=time();
 
-mysql_query("insert into image values ('zouxuan','$time','$destFileName')");
+mysql_query("insert into image values('$name','$time','$destFileName')");
 
 $data=$_POST['data'];
 
-mysql_query("insert into record values ('zouxuan','$time','$data')");
+mysql_query("insert into record values ('$name','$time','$data')");
 
 //$_SESSION['username']
 
