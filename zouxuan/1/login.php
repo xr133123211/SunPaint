@@ -1,6 +1,8 @@
 <?php
 $name=$_POST['username'];
 $pass=$_POST['password'];
+$lifeTime = 24 * 3600;
+session_set_cookie_params($lifeTime);
 session_start();
 require("dbconn.php");
 
@@ -10,13 +12,13 @@ require("dbconn.php");
            $_SESSION['username']=$name;
            $_SESSION['password']=$pass;
            $return['result']="success";
-
+           
            mysql_free_result($arr);
            exit(json_encode($return));
        }
     }
 
 $return['result']="fail";
-exit(json_encode($return));
+exit(json_encode($return))
 
 ?>

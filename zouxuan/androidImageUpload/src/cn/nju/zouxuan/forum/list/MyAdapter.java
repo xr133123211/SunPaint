@@ -1,7 +1,6 @@
 package cn.nju.zouxuan.forum.list;
 
-import com.spring.sky.image.upload.R;
-
+import cn.nju.zouxuan.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;

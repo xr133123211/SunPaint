@@ -7,8 +7,9 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="400px"
-        android:scaleType="fitXY" />
+        android:layout_height="300px"
+        android:layout_gravity="center"
+        android:scaleType="fitCenter" />
 
     <EditText
         android:id="@+id/editText1"
@@ -24,12 +25,17 @@
         android:id="@+id/selectImage"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="选择图片" />
+        android:background="@drawable/btn_style_alert_dialog_button"
+        android:text="选择图片"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/uploadImage"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="上传图片" />
+        android:background="@drawable/btn_style_alert_dialog_cancel"
+        android:text="发表"
+        android:textColor="#ffffff"
+        android:textStyle="bold" />
 
 </LinearLayout>

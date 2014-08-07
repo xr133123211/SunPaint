@@ -1,7 +1,7 @@
 package cn.nju.zouxuan.forum.detail;
 
-import com.spring.sky.image.upload.R;
-
+import cn.nju.zouxuan.R;
+import cn.nju.zouxuan.util.SysApplication;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +19,7 @@ public class ReviewActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.review);
+		SysApplication.getInstance().addActivity(this);
 		editText=(EditText)findViewById(R.id.editText1);
 		button=(Button)findViewById(R.id.button1);
 		button.setOnClickListener(new OnClickListener() {
@@ -38,12 +39,6 @@ public class ReviewActivity extends Activity {
 		setResult(Activity.RESULT_OK, lastIntent);
 		finish();
 	}
-	
-	
-	
-	
-	
-	
 	
 
 }

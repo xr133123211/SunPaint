@@ -4,13 +4,12 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.json.JSONObject;
 
+import cn.nju.zouxuan.R;
+import cn.nju.zouxuan.R.string;
 import cn.nju.zouxuan.forum.list.ListActivity;
 import cn.nju.zouxuan.login.LoginActivity;
 import cn.nju.zouxuan.util.Client;
 import cn.nju.zouxuan.util.SysApplication;
-
-import com.spring.sky.image.upload.R;
-
 import android.R.bool;
 import android.R.integer;
 import android.app.Activity;
@@ -29,6 +28,7 @@ public class StartActivity extends Activity {
 	Button loginButton;
 	private static final int NOLOGIN = 1;
 	private static final int LOGIN = 2;
+	String name;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +66,14 @@ public class StartActivity extends Activity {
 					HttpResponse response = Client.getHttpClient().execute(
 							request);
 					JSONObject jsonObject = Client.jsonDecode(response);
-					String state = jsonObject.getString("result");
-					if (state.equals("unlogin")) {
+					name = jsonObject.getString("result");
+					//TODO如果登录，那返回名字，如果没有登录，返回unlogin
+					if (name.equals("unlogin")) {
 						handler.sendEmptyMessage(NOLOGIN);
 					} else {
 						handler.sendEmptyMessage(LOGIN);
 					}
+//					handler.sendEmptyMessage(LOGIN);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -82,7 +84,8 @@ public class StartActivity extends Activity {
 
 	
 	private void requestlogin() {
-		Toast.makeText(this, "登录！", Toast.LENGTH_LONG);
+		Toast toast=Toast.makeText(this, "登录！", Toast.LENGTH_LONG);
+		toast.show();
 	}
 	
 	
@@ -95,6 +98,8 @@ public class StartActivity extends Activity {
 			case LOGIN:
 				Intent intent = new Intent(StartActivity.this,
 						ListActivity.class);
+				intent.putExtra("isfirst", true);
+				
 				startActivity(intent);
 				break;
 

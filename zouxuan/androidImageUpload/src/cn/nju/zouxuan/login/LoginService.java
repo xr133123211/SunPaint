@@ -14,14 +14,15 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import cn.nju.zouxuan.util.Client;
+
 public class LoginService {
 
-	HttpClient httpClient;
 
 	protected HttpResponse http_get(String url) {
 		HttpGet request = new HttpGet(url);
 		try {
-			HttpResponse response = getHttpClient().execute(request);
+			HttpResponse response = Client.getHttpClient().execute(request);
 			return response;
 		} catch (Exception e) {
 			return null;
@@ -49,27 +50,13 @@ public class LoginService {
 		}
 		try {
 			request.setEntity(new UrlEncodedFormEntity(argList, "UTF-8"));
-			HttpResponse response = getHttpClient().execute(request);
+			HttpResponse response = Client.getHttpClient().execute(request);
 			return response;
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	protected HttpClient getHttpClient() {
-		if (httpClient == null) {
-			synchronized (this) {
-				// double check
-				if (httpClient == null) {
-					httpClient = new DefaultHttpClient();
-				}
-			}
-		}
-		return httpClient;
-	}
 	
-	protected void shut() {
-		getHttpClient().getConnectionManager().shutdown();
-	}
 
 }

@@ -1,5 +1,5 @@
 /** Automatically generated file. DO NOT MODIFY */
-package com.spring.sky.image.upload;
+package cn.nju.zouxuan;
 
 public final class BuildConfig {
     public final static boolean DEBUG = true;

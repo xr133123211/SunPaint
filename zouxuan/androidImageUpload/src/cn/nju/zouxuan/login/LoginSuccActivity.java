@@ -9,10 +9,10 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
+import cn.nju.zouxuan.R;
 import cn.nju.zouxuan.start.StartActivity;
 import cn.nju.zouxuan.util.SysApplication;
-
-import com.spring.sky.image.upload.R;
 
 public class LoginSuccActivity extends Activity {
 	
@@ -24,10 +24,13 @@ public class LoginSuccActivity extends Activity {
 		
 		super.onCreate(savedInstanceState);
 		SysApplication.getInstance().addActivity(this);
+		Intent intent=getIntent();
+		String name=intent.getStringExtra("name");
 		setContentView(R.layout.login);
 		signout=(Button)findViewById(R.id.button1);
 		sp=this.getSharedPreferences("userInfo", Context.MODE_WORLD_READABLE);
-		
+		TextView nameView=(TextView)findViewById(R.id.textView3);
+		nameView.setText(name);
 		signout.setOnClickListener(new OnClickListener() {
 			
 			@Override

@@ -33,7 +33,6 @@ public class UploadUtil {
 	private static UploadUtil uploadUtil;
 	private String string;
 	private UploadUtil() {
-
 	}
 
 	/**
@@ -118,7 +117,7 @@ public class UploadUtil {
 	
 	
 	public void toUpoadFile(File file,String data){
-		HttpPost httpPost=new HttpPost("http://1.zouxuan2.vipsinaapp.com/file.php");
+		HttpPost httpPost=new HttpPost("http://1.zouxuan2.sinaapp.com/file.php");
 		MultipartEntity entity = new MultipartEntity();
 		ContentBody contentBody = new FileBody(file);
 		entity.addPart("file", contentBody);

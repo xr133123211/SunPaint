@@ -17,6 +17,7 @@ import org.json.JSONTokener;
 public class Client {
 
 	static HttpClient httpClient;
+	public static String name;
 
 	public static HttpResponse http_get(String url) {
 		HttpGet request = new HttpGet(url);

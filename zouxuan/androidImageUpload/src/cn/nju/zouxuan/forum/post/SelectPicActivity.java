@@ -1,7 +1,7 @@
 package cn.nju.zouxuan.forum.post;
 
-import com.spring.sky.image.upload.R;
-
+import cn.nju.zouxuan.R;
+import cn.nju.zouxuan.util.SysApplication;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -18,13 +18,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-/**
- * @author spring sky<br>
- * Email :vipa1888@163.com<br>
- * QQ: 840950105<br>
- * @version 创建时间：2012-11-22 上午9:20:03
- * 说明：主要用于选择文件操作
- */
 
 public class SelectPicActivity extends Activity implements OnClickListener{
 
@@ -57,6 +50,7 @@ public class SelectPicActivity extends Activity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.select_pic_layout);
+		SysApplication.getInstance().addActivity(this);
 		initView();
 	}
 	/**

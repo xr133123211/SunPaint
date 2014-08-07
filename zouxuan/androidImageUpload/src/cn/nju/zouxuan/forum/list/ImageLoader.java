@@ -17,8 +17,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
-import com.spring.sky.image.upload.R;
-
+import cn.nju.zouxuan.R;
 import android.R.integer;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;

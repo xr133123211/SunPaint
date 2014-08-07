@@ -16,4 +16,10 @@
         android:layout_height="wrap_content"
         android:text="登录" />
 
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="浏览作品" />
+
 </LinearLayout>

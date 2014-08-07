@@ -15,9 +15,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import cn.nju.zouxuan.R;
 import cn.nju.zouxuan.util.SysApplication;
-
-import com.spring.sky.image.upload.R;
 
 public class RegisterActivity extends Activity{
 	
@@ -78,8 +77,6 @@ public class RegisterActivity extends Activity{
 					string= result.getString("result");
 				} catch (Exception e) {
 					e.printStackTrace();
-				}finally{
-					service.shut();
 				}
 				if (string.equals("success")) {
 					handler.sendEmptyMessage(REGISTER_SUCC);

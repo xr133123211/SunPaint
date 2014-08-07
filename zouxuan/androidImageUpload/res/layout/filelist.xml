@@ -8,18 +8,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="39dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.01"
+            android:src="@drawable/head" />
+
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25sp"
             android:text="TextView" />
 
         <Button
             android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="0.11"
+            android:textStyle="bold"
+            android:background="@drawable/btn_style_alert_dialog_button"
             android:text="发表" />
-
     </LinearLayout>
 
     <ListView

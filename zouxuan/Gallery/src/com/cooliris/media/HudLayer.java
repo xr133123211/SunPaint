@@ -2,7 +2,11 @@ package com.cooliris.media;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.microedition.khronos.opengles.GL11;
+
+import org.apache.commons.logging.Log;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ComponentName;
@@ -15,6 +19,8 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.util.FloatMath;
 import android.view.MotionEvent;
+
+import com.cooliris.edit.EditActivity;
 import com.cooliris.media.MenuBar.Menu;
 import com.cooliris.media.PopupMenu.Option;
 
@@ -163,8 +169,10 @@ public final class HudLayer extends Layer {
 						System.out.println(selection.size());
 						ArrayList<MediaItem> items = selection.get(0).mediaItems;
 						MediaItem item = items.get(0);
-						System.out.println(item.mFilePath);
-
+						System.out.println("------->>>>"+item.mFilePath);
+						Intent intent=new Intent(mContext,EditActivity.class);
+						intent.putExtra("path", item.mFilePath);
+						mContext.startActivity(intent);
 					}
 				}).build();
 

@@ -16,9 +16,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import cn.nju.zouxuan.R;
 import cn.nju.zouxuan.forum.list.ListActivity;
-
-import com.spring.sky.image.upload.R;
+import cn.nju.zouxuan.util.SysApplication;
 
 /**
  * 说明：主要用于选择文件和上传文件操作
@@ -61,6 +61,7 @@ public class PostActivity extends Activity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		SysApplication.getInstance().addActivity(this);
 		setContentView(R.layout.main);
 		initView();
 	}
@@ -147,11 +148,21 @@ public class PostActivity extends Activity implements OnClickListener {
 						Toast.LENGTH_LONG);
 				toast.show();
 			} else if (msg.what == UPLOAD_SUCC) {
-				imageView.setImageBitmap(null);
-				editText.setText("");
 				Toast toast = Toast.makeText(PostActivity.this, "发帖成功",
 						Toast.LENGTH_LONG);
 				toast.show();
+				imageView.setImageBitmap(null);
+				editText.setText("");
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Intent intent = new Intent(PostActivity.this,
+						ListActivity.class);
+				startActivity(intent);
+				
 			}
 		}
 	};

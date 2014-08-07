@@ -11,9 +11,9 @@
         <item name="android:windowAnimationStyle">@style/AnimBottom</item>
         <item name="android:windowFrame">@null</item>
         <!-- 边框 -->
-        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowIsFloating">true</item>
         <!-- 是否浮现在activity之上 -->
-        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowIsTranslucent">false</item>
         <!-- 半透明 -->
         <item name="android:windowNoTitle">true</item>
         <!-- 无标题 -->
@@ -23,4 +23,13 @@
         <!-- 模糊 -->
     </style>
 
+    <!-- <style name="DialogStyleTwo" parent="android:style/Theme.Holo.DialogWhenLarge">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">#00000000</item>
+        <item name="android:windowBackground">#99000000</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+          <item name="android:windowAnimationStyle">@style/AnimBottom</item>
+    </style>
+ -->
 </resources>

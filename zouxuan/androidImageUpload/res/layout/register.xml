@@ -61,10 +61,10 @@
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="130dp"
-        android:layout_y="363dp"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_x="108dp"
+        android:layout_y="300dp"
         android:text="注册" />
 
 </AbsoluteLayout>

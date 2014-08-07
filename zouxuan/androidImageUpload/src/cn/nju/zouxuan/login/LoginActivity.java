@@ -21,11 +21,10 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Toast;
+import cn.nju.zouxuan.R;
 import cn.nju.zouxuan.start.StartActivity;
+import cn.nju.zouxuan.util.Client;
 import cn.nju.zouxuan.util.SysApplication;
-
-import com.spring.sky.image.upload.R;
-
 
 public class LoginActivity extends Activity {
 	private static final int LOGIN_SUCC = 0;
@@ -33,9 +32,9 @@ public class LoginActivity extends Activity {
 	LoginService service;
 	EditText name;
 	EditText password;
-	private CheckBox rememberBox,autoBox;
+	private CheckBox rememberBox, autoBox;
 	private SharedPreferences sp;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,41 +45,37 @@ public class LoginActivity extends Activity {
 		password = (EditText) findViewById(R.id.editText2);
 		final Button login = (Button) findViewById(R.id.button1);
 		final Button register = (Button) findViewById(R.id.button2);
-		rememberBox=(CheckBox)findViewById(R.id.checkBox1);
-		autoBox=(CheckBox)findViewById(R.id.checkBox2);
-		
-		if(sp.getBoolean("ischeck", false))  
-        {  
-          //设置默认是记录密码状态  
-			System.out.println("~~~~~~~~~~");
-          rememberBox.setChecked(true);  
-          name.setText(sp.getString("username", ""));  
-          password.setText(sp.getString("password", ""));  
-          //判断自动登陆多选框状态  
-          if(sp.getBoolean("auto_ischeck", false))  
-          {  
-                 //设置默认是自动登录状态  
-                 autoBox.setChecked(true);  
-                //跳转界面  
-                Intent intent = new Intent(LoginActivity.this,LoginSuccActivity.class);  
-                startActivity(intent);  
-                  
-          }  
-        }  
+		rememberBox = (CheckBox) findViewById(R.id.checkBox1);
+		autoBox = (CheckBox) findViewById(R.id.checkBox2);
 
-		
+		if (sp.getBoolean("ischeck", false)) {
+			// 设置默认是记录密码状态
+			System.out.println("~~~~~~~~~~");
+			rememberBox.setChecked(true);
+			name.setText(sp.getString("username", ""));
+			password.setText(sp.getString("password", ""));
+			// 判断自动登陆多选框状态
+			if (sp.getBoolean("auto_ischeck", false)) {
+				// 设置默认是自动登录状态
+				autoBox.setChecked(true);
+				// 跳转界面
+				userLogin(sp.getString("username", ""),
+						sp.getString("password", ""));
+
+			}
+		}
+
 		OnClickListener listener = new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				if (arg0 == login) {
-					 String nameString=name.getText().toString();
-					String passwordString=password.getText().toString();
-					if (nameString.equals("")||passwordString.equals("")) {
-						Toast toast = Toast.makeText(LoginActivity.this, "有内容为空",
-								Toast.LENGTH_SHORT);
+					String nameString = name.getText().toString();
+					String passwordString = password.getText().toString();
+					if (nameString.equals("") || passwordString.equals("")) {
+						Toast toast = Toast.makeText(LoginActivity.this,
+								"有内容为空", Toast.LENGTH_SHORT);
 						toast.show();
-					}
-					else {
+					} else {
 						userLogin(name.getText().toString(), password.getText()
 								.toString());
 					}
@@ -94,37 +89,28 @@ public class LoginActivity extends Activity {
 		login.setOnClickListener(listener);
 		register.setOnClickListener(listener);
 		rememberBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
+
 			@Override
 			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
 				if (rememberBox.isChecked()) {
-					sp.edit().putBoolean("ischeck", true).commit(); 
-					System.out.println("!!!!!!!!!!!");
-				}
-				else {
-					System.out.println("^^^^^^^^");
-					 sp.edit().putBoolean("ischeck", false).commit(); 
+					sp.edit().putBoolean("ischeck", true).commit();
+				} else {
+					sp.edit().putBoolean("ischeck", false).commit();
 				}
 			}
 		});
-		
+
 		autoBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
+
 			@Override
 			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
 				if (autoBox.isChecked()) {
-					System.out.println("##########");
-					sp.edit().putBoolean("auto_ischeck", true).commit(); 
-				}
-				else {
-					System.out.println("&&&&&&&&&&");
-					 sp.edit().putBoolean("auto_ischeck", false).commit(); 
+					sp.edit().putBoolean("auto_ischeck", true).commit();
+				} else {
+					sp.edit().putBoolean("auto_ischeck", false).commit();
 				}
 			}
 		});
-		
-		
-		
 
 	}
 
@@ -143,19 +129,16 @@ public class LoginActivity extends Activity {
 					s = result.getString("result");
 				} catch (Exception e) {
 					e.printStackTrace();
-				} finally {
-					service.shut();
 				}
 				if (s.equals("success")) {
 					handler.sendEmptyMessage(LOGIN_SUCC);
+					Client.name = name;
 				} else {
 					handler.sendEmptyMessage(LOGIN_FAIL);
 				}
 			}
 		}.start();
 	}
-	
-	
 
 	private Handler handler = new Handler() {
 
@@ -166,15 +149,18 @@ public class LoginActivity extends Activity {
 						Toast.LENGTH_SHORT);
 				toast.show();
 				if (rememberBox.isChecked()) {
-					Editor editor = sp.edit();  
-                    editor.putString("username", name.getText().toString());  
-                    editor.putString("password",password.getText().toString());  
-                    
-                    editor.commit();
+					Editor editor = sp.edit();
+					editor.putString("username", name.getText().toString());
+					editor.putString("password", password.getText().toString());
+
+					editor.commit();
 				}
-				Intent intent=new Intent(LoginActivity.this,LoginSuccActivity.class);
+
+				Intent intent = new Intent(LoginActivity.this,
+						LoginSuccActivity.class);
+				intent.putExtra("name", name.getText().toString());
 				startActivity(intent);
-				
+
 			} else if (msg.what == LOGIN_FAIL) {
 				name.setText("");
 				password.setText("");
@@ -185,16 +171,14 @@ public class LoginActivity extends Activity {
 		}
 
 	};
-	
-	public boolean onKeyDown(int keyCode, KeyEvent event) {  
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {  
-        	//返回到主界面
-        	Intent intent=new Intent(LoginActivity.this,StartActivity.class);
-        	startActivity(intent);
-            return false;  
-        }  
-        return false;  
-    }  
 
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			// 返回到主界面
+			finish();
+			return false;
+		}
+		return false;
+	}
 
 }

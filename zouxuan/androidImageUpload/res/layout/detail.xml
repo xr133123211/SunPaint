@@ -37,8 +37,10 @@
     <Button
         android:id="@+id/button1"
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
+		android:background="@drawable/btn_style_alert_dialog_button"
         android:text="评论" />
 
     <ListView

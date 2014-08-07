@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.Inet4Address;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -17,13 +18,14 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import cn.nju.zouxuan.R;
 import cn.nju.zouxuan.forum.list.ListActivity;
 import cn.nju.zouxuan.util.Client;
-
-import com.spring.sky.image.upload.R;
-
+import cn.nju.zouxuan.util.SysApplication;
+import android.R.integer;
 import android.R.string;
 import android.app.Activity;
 import android.content.Intent;
@@ -45,8 +47,8 @@ import android.widget.Toast;
 
 public class DetailActivity extends Activity {
 
-	private static final int REQUIRE_HEIGHT = 400;
-	private static final int REQUIRE_WIDTH = 800;
+	private static final int REQUIRE_HEIGHT = 200;
+	private static final int REQUIRE_WIDTH = 400;
 	private JSONArray jsonArray;
 	private String[] namelist;
 	private String[] timelist;
@@ -55,22 +57,26 @@ public class DetailActivity extends Activity {
 	private DetailAdapter adapter;
 	private Button comment;
 	private String review;
-	private String name;  //原作者的时间
+	private String name; // 原作者的时间
 	private String time;
-	
-
+	private ImageView imageView;
+	private Bitmap bitmap;
+	private String review_time;
+	private int review_length;
+	private int reviewer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		SysApplication.getInstance().addActivity(this);
 		setContentView(R.layout.detail);
-		comment=(Button)findViewById(R.id.button1);
+		comment = (Button) findViewById(R.id.button1);
 		TextView textView_name = (TextView) findViewById(R.id.textview_name);
 		TextView textView_time = (TextView) findViewById(R.id.textView_time);
-		final ImageView imageView = (ImageView) findViewById(R.id.imageView1);
+		imageView = (ImageView) findViewById(R.id.imageView1);
 		TextView textView_data = (TextView) findViewById(R.id.textView1);
 		Intent intent = getIntent();
-		 name = intent.getStringExtra("name");
+		name = intent.getStringExtra("name");
 		time = intent.getStringExtra("time");
 		String data = intent.getStringExtra("data");
 		final String image = intent.getStringExtra("image");
@@ -79,36 +85,52 @@ public class DetailActivity extends Activity {
 		textView_data.setText(data);
 		new Thread() {
 			public void run() {
-				imageView.setImageBitmap(loadImageFromInternet(image));
+				bitmap = loadImageFromInternet(image);
 				HttpResponse response = http_get(name, time);
-				System.out.println(response);
 				getJson(response);
+				handler.sendEmptyMessage(0);
 			}
 		}.start();
 
 		comment.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
-				Intent intent=new Intent(DetailActivity.this,ReviewActivity.class);
+				Intent intent = new Intent(DetailActivity.this,
+						ReviewActivity.class);
 				startActivityForResult(intent, 0);
 			}
 		});
 	}
-	
-	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
+	protected void onActivityResult(int requestCode, int resultCode,
+			Intent intent) {
 		if (resultCode == Activity.RESULT_OK && requestCode == 0) {
-			review= intent.getStringExtra("data");
-			
+			review = intent.getStringExtra("data");
+			HttpResponse response = sendReview(review);
+			try {
+				JSONObject jsonObject = Client.jsonDecode(response);
+				review_time = jsonObject.getString("time");
+				name = jsonObject.getString("name");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			namelist[review_length] = name;
+			timelist[review_length] = time;
+			datalist[review_length] = review;
+			setupViews(review_length + 1);
+
 		}
 		super.onActivityResult(requestCode, resultCode, intent);
 	}
-	
-	
-	private void setupViews() {
+
+	private void setupViews(int length) {
 		listView = (ListView) findViewById(R.id.listView1);
-		adapter = new DetailAdapter(namelist, timelist, datalist, this);
+		adapter = new DetailAdapter(namelist, timelist, datalist, length, this);
 		listView.setAdapter(adapter);
+		imageView.setImageBitmap(bitmap);
 	}
 
 	private void getJson(HttpResponse httpResponse) {
@@ -118,6 +140,9 @@ public class DetailActivity extends Activity {
 			BufferedReader br = new BufferedReader(new InputStreamReader(is,
 					"iso-8859-1"), 8);
 			StringBuilder sb = new StringBuilder();
+//			if (br.readLine()==null) {
+//				System.out.println("!!!!!!!!!!!!");
+//			}
 			sb.append(br.readLine() + "\n");
 			String line = "0";
 			while ((line = br.readLine()) != null) {
@@ -126,33 +151,37 @@ public class DetailActivity extends Activity {
 			is.close();
 			String result = sb.toString();
 			jsonArray = new JSONArray(result);
-			int length = jsonArray.length();
-			namelist = new String[length];
-			timelist = new String[length];
-			datalist = new String[length];
-			
+			review_length = jsonArray.length();
+			System.out.println("reviewLength: " + review_length);
+			namelist = new String[review_length + 1];
+			timelist = new String[review_length + 1];
+			datalist = new String[review_length + 1];
+
 			for (int i = 0; i < jsonArray.length(); i++) { // 把读取到数据库表的数据通过for循环添加到数组里
 				JSONObject json_data = jsonArray.getJSONObject(i);
-				namelist[i]=json_data.getString("reviewer");
-				timelist[i]=json_data.getString("reviewer_time");
-				datalist[i]=json_data.getString("data");
+				namelist[i] = json_data.getString("reviewer");
+				timelist[i] = json_data.getString("reviewer_time");
+				datalist[i] = json_data.getString("data");
 			}
-			
-			handler.sendEmptyMessage(0);
 
-		} catch (Exception e) {
+		} catch (JSONException e) {
+			review_length=0;
+			namelist=new String[1];
+			timelist=new String[1];
+			datalist=new String[1];
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public  Handler handler = new Handler() {
+
+	Handler handler = new Handler() {
 
 		@Override
 		public void handleMessage(Message msg) {
-			setupViews();
+			setupViews(review_length);
 		}
 	};
-
 
 	protected HttpResponse http_get(String owner, String owner_time) {
 
@@ -161,33 +190,32 @@ public class DetailActivity extends Activity {
 						+ "&ownertime=" + owner_time).replace(" ", "+");
 		HttpGet request = new HttpGet(url);
 		try {
-			 HttpResponse response = Client.getHttpClient().execute(request);
-			 return response;
+			HttpResponse response = Client.getHttpClient().execute(request);
+			return response;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
-	public HttpResponse sendReview(String data){
+
+	public HttpResponse sendReview(String data) {
 		try {
-			return Client.http_post("http://1.zouxuan2.sinaapp.com/review.php", 
+			return Client.http_post("http://1.zouxuan2.sinaapp.com/review.php",
 					new BasicNameValuePair("owner", name),
 					new BasicNameValuePair("ownertime", time),
 					new BasicNameValuePair("data", data));
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
+
 	}
-	
-	
-	
+
 	public Bitmap loadImageFromInternet(String url) {
 		System.out.println(url);
 		Bitmap bitmap = null;
-		//HttpClient client = AndroidHttpClient.newInstance("Android");
-		HttpClient client=AndroidHttpClient.newInstance("Android");
+		HttpClient client = Client.getHttpClient();
 		HttpParams params = client.getParams();
 		HttpConnectionParams.setConnectionTimeout(params, 3000);
 		HttpConnectionParams.setSocketBufferSize(params, 3000);
@@ -195,9 +223,9 @@ public class DetailActivity extends Activity {
 		InputStream inputStream = null;
 		HttpGet httpGet = null;
 		try {
-			
+
 			httpGet = new HttpGet(url);
-			
+
 			response = client.execute(httpGet);
 			int stateCode = response.getStatusLine().getStatusCode();
 			if (stateCode != HttpStatus.SC_OK) {
@@ -232,8 +260,6 @@ public class DetailActivity extends Activity {
 		} catch (IOException e) {
 			httpGet.abort();
 			e.printStackTrace();
-		} finally {
-			((AndroidHttpClient) client).close();
 		}
 		return bitmap;
 	}
@@ -269,14 +295,11 @@ public class DetailActivity extends Activity {
 		return outputStream.toByteArray();
 	}
 
-	
-	public boolean onKeyDown(int keyCode, KeyEvent event) {  
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {  
-        	Intent intent=new Intent(DetailActivity.this,ListActivity.class);
-        	startActivity(intent);
-            return false;  
-        }  
-        return false;  
-    }  
-	
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			finish();
+		}
+		return false;
+	}
+
 }
