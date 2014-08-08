@@ -43,8 +43,8 @@ public class LoginActivity extends Activity {
 		sp = this.getSharedPreferences("userInfo", Context.MODE_WORLD_READABLE);
 		name = (EditText) findViewById(R.id.editText1);
 		password = (EditText) findViewById(R.id.editText2);
-		final Button login = (Button) findViewById(R.id.button1);
-		final Button register = (Button) findViewById(R.id.button2);
+		final Button login = (Button) findViewById(R.id.forum_button);
+		final Button register = (Button) findViewById(R.id.login_button);
 		rememberBox = (CheckBox) findViewById(R.id.checkBox1);
 		autoBox = (CheckBox) findViewById(R.id.checkBox2);
 

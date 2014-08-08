@@ -63,7 +63,7 @@ public class ListActivity extends Activity {
 		SysApplication.getInstance().addActivity(this);
 		Intent intent = getIntent();
 		Log.i("on", "inActivity");
-		post = (Button) findViewById(R.id.button1);
+		post = (Button) findViewById(R.id.forum_button);
 		name = (TextView) findViewById(R.id.textView1);
 		name.setText(Client.name);
 		post.setOnClickListener(new OnClickListener() {

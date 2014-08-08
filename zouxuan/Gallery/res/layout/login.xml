@@ -5,52 +5,54 @@
     android:layout_height="match_parent"
     android:background="@drawable/back" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="196dp"
-        android:layout_y="58dp"
-        android:text=" 登录成功！"
-        android:textSize="25sp" />
-
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="100px"
         android:layout_height="100px"
-        android:layout_x="373dp"
-        android:layout_y="209dp"
+        
+        android:layout_x="556dp"
+        android:layout_y="188dp"
         android:src="@drawable/head" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="208dp"
-        android:layout_y="224dp"
+        android:layout_x="344dp"
+        android:layout_y="220dp"
         android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="25sp" />
+        android:textSize="30dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="112dp"
-        android:layout_y="224dp"
+        android:layout_x="190dp"
+        android:textSize="30dp"
+        android:layout_y="218dp"
         android:text="欢迎："
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="25sp" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="319dp"
+        android:layout_y="120dp"
+        android:textSize="30dp"
+        android:text=" 登录成功！" />
 
     <Button
-        android:id="@+id/button1"
-        android:layout_width="80dp"
-        android:layout_height="40dp"
-        android:layout_x="240dp"
-        android:layout_y="379dp"
+        android:id="@+id/forum_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="334dp"
+        android:layout_y="388dp"
         android:background="@drawable/btn_style_alert_dialog_cancel"
         android:text="退出登录"
         android:textColor="#ffffff"
+        android:textSize="30dp"
         android:textStyle="bold" />
 
 </AbsoluteLayout>

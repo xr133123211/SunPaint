@@ -22,7 +22,7 @@ public class ReviewActivity extends Activity {
 		setContentView(R.layout.review);
 		SysApplication.getInstance().addActivity(this);
 		editText=(EditText)findViewById(R.id.editText1);
-		button=(Button)findViewById(R.id.button1);
+		button=(Button)findViewById(R.id.forum_button);
 		button.setOnClickListener(new OnClickListener() {
 			
 			@Override

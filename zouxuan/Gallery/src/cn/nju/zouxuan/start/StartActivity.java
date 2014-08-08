@@ -22,6 +22,8 @@ import cn.nju.zouxuan.util.SysApplication;
 import com.cooliris.media.Gallery;
 import com.cooliris.media.R;
 
+
+
 public class StartActivity extends Activity {
 	Button forumButton;
 	Button loginButton;
@@ -35,11 +37,10 @@ public class StartActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.start);
 		SysApplication.getInstance().addActivity(this);
-		forumButton = (Button) findViewById(R.id.button1);
-		loginButton=(Button)findViewById(R.id.button2);
-		browerButton=(Button)findViewById(R.id.button3);
+		forumButton=(Button)findViewById(R.id.forum_button);
+		loginButton=(Button)findViewById(R.id.login_button);
+		browerButton=(Button)findViewById(R.id.browser_button);
 		forumButton.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View arg0) {
 				testlogin();

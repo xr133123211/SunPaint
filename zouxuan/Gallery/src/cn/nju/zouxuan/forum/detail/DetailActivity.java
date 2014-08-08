@@ -63,7 +63,7 @@ public class DetailActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		SysApplication.getInstance().addActivity(this);
 		setContentView(R.layout.detail);
-		comment = (Button) findViewById(R.id.button1);
+		comment = (Button) findViewById(R.id.forum_button);
 		TextView textView_name = (TextView) findViewById(R.id.textview_name);
 		TextView textView_time = (TextView) findViewById(R.id.textView_time);
 		imageView = (ImageView) findViewById(R.id.imageView1);

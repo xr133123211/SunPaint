@@ -5,19 +5,19 @@
     android:orientation="vertical" >
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/forum_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="论坛" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="登录" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/browser_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="浏览作品" />

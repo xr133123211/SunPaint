@@ -28,7 +28,7 @@ public class LoginSuccActivity extends Activity {
 		Intent intent=getIntent();
 		String name=intent.getStringExtra("name");
 		setContentView(R.layout.login);
-		signout=(Button)findViewById(R.id.button1);
+		signout=(Button)findViewById(R.id.forum_button);
 		sp=this.getSharedPreferences("userInfo", Context.MODE_WORLD_READABLE);
 		TextView nameView=(TextView)findViewById(R.id.textView3);
 		nameView.setText(name);
