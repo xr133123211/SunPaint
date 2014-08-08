@@ -63,8 +63,9 @@ public class UploadUtil {
 			return;
 		}
 		try {
-			File file = new File(filePath);
-			uploadFile(file,data);
+			File newFile=ImageUtil.saveMyBitmap(ImageUtil.getimage(filePath));
+//			File file = new File(filePath);
+			uploadFile(newFile,data);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;
